@@ -38,13 +38,13 @@ SEQ_LENGTH = 8
 N_HIDDEN = 512
 
 # Optimization learning rate
-LEARNING_RATE = .005
+LEARNING_RATE = .06
 
 # All gradients above this will be clipped
-GRAD_CLIP = 100
+#GRAD_CLIP = 100
 
 # How often should we check the output?
-PRINT_FREQ =  1000 #1000
+PRINT_FREQ = 20 #1000
 
 # Number of epochs to train the net
 NUM_EPOCHS = 50
@@ -52,33 +52,18 @@ NUM_EPOCHS = 50
 # Batch Size
 BATCH_SIZE = 128
 
-#Number of steps 2-50
+#Number of steps (start from 2-50)
 NUM_STEPS = 2
 
 # as we generate the date on each take data_size gives a value for an epoch size
-data_size = 10000 * BATCH_SIZE
+data_size = 10000000
 
 
-def gen_xor_data(word_length=SEQ_LENGTH, batch_size = BATCH_SIZE):
-    x_list = np.random.randint(2, size=(batch_size,word_length))
-    x = np.array(x_list,dtype='int32')
-    y = np.zeros(batch_size)  
-
-    y = x_list.sum(axis=1) % 2
+def gen_data(seq_length=SEQ_LENGTH, batch_size = BATCH_SIZE):
+    x = np.random.randint(2, size=(batch_size,seq_length))
+    y = x.sum(axis=1) % 2
 
     return x, np.array(y,dtype='int32')
- 
-
-def gen_data(seq_length = SEQ_LENGTH, batch_size = BATCH_SIZE):
-    return gen_xor_data(seq_length, batch_size)
-
-def encode_phrase(input_phrase):
-    phrase = np.zeros((len(input_phrase), 2),dtype='int32')
-    for xi in range(len(input_phrase)):
-        phrase[xi] [input_phrase[xi]] = 1
-    return phrase
-
-
 
 
 def main(num_epochs=NUM_EPOCHS):
@@ -197,9 +182,8 @@ def main(num_epochs=NUM_EPOCHS):
     
     print("Training ...")
     print("Seed used for text generation is: " + ''.join(str(char) for char in generation_phrase))
-    p = 0
     try:
-        for it in xrange(data_size * num_epochs / BATCH_SIZE):
+        for it in xrange(data_size / (BATCH_SIZE * PRINT_FREQ)):
             try_it_out() 
             
             avg_cost = 0;
@@ -208,7 +192,7 @@ def main(num_epochs=NUM_EPOCHS):
                 x_zero = np.zeros((BATCH_SIZE,NUM_STEPS,1),dtype='int32')
 
                 avg_cost += train(x, x_zero, y)
-            print("Epoch {} average loss = {}".format(it*1.0*PRINT_FREQ/data_size*BATCH_SIZE, avg_cost / PRINT_FREQ))
+            print("Percentage of data {} average loss = {}".format(it*1.0*PRINT_FREQ/data_size*BATCH_SIZE, avg_cost / PRINT_FREQ))
                     
     except KeyboardInterrupt:
         pass
