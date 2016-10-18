@@ -26,7 +26,7 @@ class ZeroLayer(lasagne.layers.Layer):
 generation_phrase = [0,1,0,0,1,1,0,1] #This phrase will be used as seed to generate text.
 
 # as we generate the date on each take data_size gives a value for an epoch size
-data_size = 10000
+data_size = 10000 * BATCH_SIZE
 
 
 #Lasagne Seed for Reproducibility
@@ -45,7 +45,7 @@ LEARNING_RATE = .005
 GRAD_CLIP = 100
 
 # How often should we check the output?
-PRINT_FREQ = 20 #1000
+PRINT_FREQ =  1000 #1000
 
 # Number of epochs to train the net
 NUM_EPOCHS = 50
