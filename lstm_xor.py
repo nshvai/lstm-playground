@@ -39,7 +39,7 @@ SEQ_LENGTH = 8
 N_HIDDEN = 512
 
 # Optimization learning rate
-LEARNING_RATE = .01
+LEARNING_RATE = .005
 
 # All gradients above this will be clipped
 GRAD_CLIP = 100
