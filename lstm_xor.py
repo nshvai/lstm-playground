@@ -25,8 +25,7 @@ class ZeroLayer(lasagne.layers.Layer):
 
 generation_phrase = [0,1,0,0,1,1,0,1] #This phrase will be used as seed to generate text.
 
-# as we generate the date on each take data_size gives a value for an epoch size
-data_size = 10000 * BATCH_SIZE
+
 
 
 #Lasagne Seed for Reproducibility
@@ -55,6 +54,9 @@ BATCH_SIZE = 128
 
 #Number of steps 2-50
 NUM_STEPS = 2
+
+# as we generate the date on each take data_size gives a value for an epoch size
+data_size = 10000 * BATCH_SIZE
 
 
 def gen_xor_data(word_length=SEQ_LENGTH, batch_size = BATCH_SIZE):
